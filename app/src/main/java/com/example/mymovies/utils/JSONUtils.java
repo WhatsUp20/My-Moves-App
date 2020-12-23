@@ -32,7 +32,7 @@ public class JSONUtils {
         }
         try {
             JSONArray jsonArray = jsonObject.getJSONArray(KEY_RESULTS);
-            for (int i = 0; i < jsonArray.length();i++) {
+            for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject objectMovie = jsonArray.getJSONObject(i);
                 int id = objectMovie.getInt(KEY_ID);
                 int voteCount = objectMovie.getInt(KEY_VOTE_COUNT);
@@ -44,7 +44,7 @@ public class JSONUtils {
                 String backdropPath = objectMovie.getString(KEY_BACKDROP_PATH);
                 double voteAverage = objectMovie.getDouble(KEY_VOTE_AVERAGE);
                 String releaseDate = objectMovie.getString(KEY_RELEASE_DATE);
-                Movie movie = new Movie(id,voteCount,title,originalTitle,overview,posterPath,bigPosterPath,backdropPath,voteAverage,releaseDate);
+                Movie movie = new Movie(id, voteCount, title, originalTitle, overview, posterPath, bigPosterPath, backdropPath, voteAverage, releaseDate);
                 result.add(movie);
 
             }

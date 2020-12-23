@@ -33,7 +33,7 @@ public class NetworkUtils {
     public static final int POPULARITY = 0;
     public static final int TOP_RATED = 1;
 
-     private static URL buildURL(int sortBy, int page) {
+    private static URL buildURL(int sortBy, int page) {
         URL result = null;
         String methodOfSort;
         if (sortBy == POPULARITY) {
@@ -57,8 +57,8 @@ public class NetworkUtils {
     }
 
     public static JSONObject getJSONFromNetwork(int sortBy, int page) {
-         JSONObject result = null;
-         URL url = buildURL(sortBy, page);
+        JSONObject result = null;
+        URL url = buildURL(sortBy, page);
         try {
             result = new JSONLoadTask().execute(url).get();
         } catch (ExecutionException e) {
@@ -69,7 +69,7 @@ public class NetworkUtils {
         return result;
     }
 
-    private static class JSONLoadTask extends AsyncTask<URL,Void, JSONObject> {
+    private static class JSONLoadTask extends AsyncTask<URL, Void, JSONObject> {
 
         @Override
         protected JSONObject doInBackground(URL... urls) {
