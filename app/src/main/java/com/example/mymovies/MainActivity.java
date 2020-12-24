@@ -1,6 +1,9 @@
 package com.example.mymovies;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -12,6 +15,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.mymovies.data.MainViewModel;
 import com.example.mymovies.data.Movie;
 import com.example.mymovies.utils.JSONUtils;
 import com.example.mymovies.utils.NetworkUtils;
@@ -19,6 +23,7 @@ import com.example.mymovies.utils.NetworkUtils;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,12 +32,14 @@ public class MainActivity extends AppCompatActivity {
     private MovieAdapter movieAdapter;
     private TextView textViewTopRated;
     private TextView getTextViewPopularity;
+    private MainViewModel viewModel;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        viewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication()).create(MainViewModel.class);
         recyclerViewPosters = findViewById(R.id.recyclerViewPosters);
         switchSort = findViewById(R.id.switchSort);
         textViewTopRated = findViewById(R.id.textViewTopRated);
@@ -62,6 +69,13 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Конец списка", Toast.LENGTH_SHORT).show();
             }
         });
+        LiveData<List<Movie>> moviesFromLiveData = viewModel.getMovies();
+        moviesFromLiveData.observe(this, new Observer<List<Movie>>() {
+            @Override
+            public void onChanged(List<Movie> movies) {
+                movieAdapter.setMovies(movies);
+            }
+        });
     }
 
             public void onClickSetPopularity(View view) {
@@ -85,8 +99,17 @@ public class MainActivity extends AppCompatActivity {
                     getTextViewPopularity.setTextColor(getResources().getColor(R.color.white_color));
                     methodOfSort = NetworkUtils.POPULARITY;
                 }
-                JSONObject jsonObject = NetworkUtils.getJSONFromNetwork(methodOfSort, 1);
-                ArrayList<Movie> movies = JSONUtils.getMoviesFromJson(jsonObject);
-                movieAdapter.setMovies(movies);
+                downloadData(methodOfSort, 1);
+    }
+
+    private void downloadData (int methodOfSort, int page) {
+        JSONObject jsonObject = NetworkUtils.getJSONFromNetwork(methodOfSort, 1);
+        ArrayList<Movie> movies = JSONUtils.getMoviesFromJson(jsonObject);
+        if (movies != null && !movies.isEmpty()) {
+            viewModel.deleteAllMovies();
+            for (Movie movie : movies) {
+                viewModel.insertMovie(movie);
+            }
+        }
     }
 }
