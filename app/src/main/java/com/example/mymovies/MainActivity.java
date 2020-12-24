@@ -109,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
     private void downloadData (int methodOfSort, int page) {
         JSONObject jsonObject = NetworkUtils.getJSONFromNetwork(methodOfSort, 1);
         ArrayList<Movie> movies = JSONUtils.getMoviesFromJson(jsonObject);
-        if (movies != null && !movies.isEmpty()) {
+        if (!movies.isEmpty()) {
             viewModel.deleteAllMovies();
             for (Movie movie : movies) {
                 viewModel.insertMovie(movie);

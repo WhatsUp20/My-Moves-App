@@ -24,10 +24,11 @@
             android:id="@+id/textViewLabelTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:text="Название:"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageViewBigPoster" />
+            app:layout_constraintTop_toBottomOf="@+id/imageViewAddToFavourite" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guidelineCenter"
@@ -44,12 +45,13 @@
             android:text="TextView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/guidelineCenter"
-            app:layout_constraintTop_toBottomOf="@+id/imageViewBigPoster" />
+            app:layout_constraintTop_toBottomOf="@+id/imageViewAddToFavourite" />
 
         <TextView
             android:id="@+id/textViewLabelOriginalTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:text="Оригинальное название:"
             app:layout_constraintStart_toStartOf="parent"
@@ -69,6 +71,7 @@
             android:id="@+id/textViewLabelRating"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:text="Рейтинг:"
             app:layout_constraintStart_toStartOf="parent"
@@ -88,6 +91,7 @@
             android:id="@+id/textViewLabelReleaseDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:text="Дата релиза:"
             app:layout_constraintStart_toStartOf="parent"
@@ -107,6 +111,7 @@
             android:id="@+id/textViewLabelDiscription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:text="Описание:"
             app:layout_constraintStart_toStartOf="parent"
@@ -116,10 +121,22 @@
             android:id="@+id/textViewOvervew"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:text="TextView"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewLabelDiscription" />
+
+        <ImageView
+            android:id="@+id/imageViewAddToFavourite"
+            android:layout_width="@dimen/size_of_star"
+            android:layout_height="@dimen/size_of_star"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintBottom_toBottomOf="@+id/imageViewBigPoster"
+            app:layout_constraintEnd_toEndOf="@+id/imageViewBigPoster"
+            app:layout_constraintTop_toBottomOf="@+id/imageViewBigPoster"
+            android:onClick="onClickChangeFavourite"
+            app:srcCompat="@drawable/favourite_remove" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
