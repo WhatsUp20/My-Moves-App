@@ -51,10 +51,11 @@ public class DetailActivity extends AppCompatActivity {
         } else {
             finish();
         }
+        setFavourite();
     }
 
     public void onClickChangeFavourite(View view) {
-        favoriteMovie = viewModel.getFavouriteMovieById(id);
+
         if (favoriteMovie == null) {
             viewModel.insertFavouriteMovie(new FavoriteMovie(movie));
             Toast.makeText(this, R.string.add_to_favourite, Toast.LENGTH_SHORT).show();
