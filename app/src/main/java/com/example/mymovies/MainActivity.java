@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main_menu, menu);
+        inflater.inflate(R.menu.main_menu,menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -50,10 +50,10 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         switch (id) {
-            case R.id.itemMain:
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
-            break;
+            case R.id.itemMenu:
+                Intent intent = new Intent(this,MainActivity.class);
+                startActivity(intent);
+                break;
             case R.id.itemFavourite:
                 Intent intentToFavourite = new Intent(this,FavouriteActivity.class);
                 startActivity(intentToFavourite);

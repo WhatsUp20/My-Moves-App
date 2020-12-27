@@ -38,7 +38,7 @@ public class DetailActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main_menu, menu);
+        inflater.inflate(R.menu.main_menu,menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -46,8 +46,8 @@ public class DetailActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         switch (id) {
-            case R.id.itemMain:
-                Intent intent = new Intent(this, MainActivity.class);
+            case R.id.itemMenu:
+                Intent intent = new Intent(this,MainActivity.class);
                 startActivity(intent);
                 break;
             case R.id.itemFavourite:
@@ -70,17 +70,31 @@ public class DetailActivity extends AppCompatActivity {
         textViewReleaseDate = findViewById(R.id.textViewReleaseDate);
         textViewOverview = findViewById(R.id.textViewOvervew);
         imageViewAddToFavourite = findViewById(R.id.imageViewAddToFavourite);
+
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra("id")) {
             id = intent.getIntExtra("id", -1);
             movie = viewModel.getMovieById(id);
-            createMovieDetails(movie);
+
+            /*дополнительная проверка, при которой нет краша при перезагрузке приложения
+             и просмотра детальной инфы фильма из FavouriteActivity (т.к. здесь забираю фильмы из бд
+             favourite movies, а не movies, которое при перезагрузке пустое)
+             */
+            if (movie != null) {
+                createMovieDetails(movie);
+            } else {
+                movie = viewModel.getFavouriteMovieById(id);
+                createMovieDetails(movie);
+            }
+
         } else {
             finish();
         }
-        setFavourite();
+         setFavourite();
     }
 
+
+    //кнопка для добавления в избранное фильма или его удаления
     public void onClickChangeFavourite(View view) {
 
         if (favoriteMovie == null) {
@@ -93,6 +107,7 @@ public class DetailActivity extends AppCompatActivity {
         setFavourite();
     }
 
+    //присвоения значений
     @SuppressLint("SetTextI18n")
     private void createMovieDetails(Movie movie) {
         Picasso.get().load(movie.getBigPosterPath()).into(imageViewBigPoster);
@@ -104,6 +119,7 @@ public class DetailActivity extends AppCompatActivity {
         textViewRating.setText(Double.toString(movie.getVoteAverage()));
     }
 
+    //метод для картинки (меняет серую звезду на желтую)
     private void setFavourite() {
         favoriteMovie = viewModel.getFavouriteMovieById(id);
         if (favoriteMovie == null) {

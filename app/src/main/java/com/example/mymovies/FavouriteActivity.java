@@ -23,44 +23,22 @@ import java.util.List;
 
 public class FavouriteActivity extends AppCompatActivity {
 
-    RecyclerView recyclerViewFavoriteMovies;
+    private RecyclerView recyclerViewFavouriteMovies;
     private MovieAdapter adapter;
     private MainViewModel viewModel;
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main_menu, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        int id = item.getItemId();
-        switch (id) {
-            case R.id.itemMain:
-                Intent intent = new Intent(this, MainActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.itemFavourite:
-                Intent intentToFavourite = new Intent(this,FavouriteActivity.class);
-                startActivity(intentToFavourite);
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favourite);
-        recyclerViewFavoriteMovies = findViewById(R.id.recyclerViewFavouriteMovies);
-        recyclerViewFavoriteMovies.setLayoutManager(new GridLayoutManager(this, 2));
-        adapter = new MovieAdapter();
-        recyclerViewFavoriteMovies.setAdapter(adapter);
+        recyclerViewFavouriteMovies = findViewById(R.id.recyclerViewFavouriteMovies);
+        recyclerViewFavouriteMovies.setLayoutManager(new GridLayoutManager(this,2));
         viewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication()).create(MainViewModel.class);
-        final LiveData<List<FavoriteMovie>> favouriteMovies = viewModel.getFavouriteMovies();
-        favouriteMovies.observe(this, new Observer<List<FavoriteMovie>>() {
+        adapter = new MovieAdapter();
+        recyclerViewFavouriteMovies.setAdapter(adapter);
+
+        LiveData<List<FavoriteMovie>> favouriteMovie = viewModel.getFavouriteMovies();
+        favouriteMovie.observe(this, new Observer<List<FavoriteMovie>>() {
             @Override
             public void onChanged(List<FavoriteMovie> favoriteMovies) {
                 List<Movie> movies = new ArrayList<>();
@@ -71,7 +49,6 @@ public class FavouriteActivity extends AppCompatActivity {
 
             }
         });
-
         adapter.setClickListener(new MovieAdapter.OnPosterClickListener() {
             @Override
             public void onPosterClick(int position) {
