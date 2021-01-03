@@ -28,6 +28,29 @@ public class FavouriteActivity extends AppCompatActivity {
     private MainViewModel viewModel;
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.itemMenu:
+                Intent intent = new Intent(this,MainActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.itemFavourite:
+                Intent intentToFavourite = new Intent(this,FavouriteActivity.class);
+                startActivity(intentToFavourite);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favourite);
