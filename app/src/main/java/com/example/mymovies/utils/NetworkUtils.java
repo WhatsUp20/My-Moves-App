@@ -38,8 +38,7 @@ public class NetworkUtils {
 
     private static URL buildUrlToReviews(int id) {
         Uri uri = Uri.parse(String.format(BASE_URL_REVIEWS, id)).buildUpon()
-                .appendQueryParameter(PARAMS_API_KEY, API_KEY)
-                .appendQueryParameter(PARAMS_LANGUAGE,LANGUAGE_VALUE).build();
+                .appendQueryParameter(PARAMS_API_KEY, API_KEY).build();
         try {
             return new URL(uri.toString());
         } catch (MalformedURLException e) {
@@ -73,7 +72,7 @@ public class NetworkUtils {
         return null;
     }
 
-    public static JSONObject getJSONForVideo(int id) {
+    public static JSONObject getJSONForVideos(int id) {
         JSONObject result = null;
         URL url = buildUrlToVideos(id);
         try {

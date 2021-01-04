@@ -3,22 +3,37 @@ package com.example.mymovies;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Adapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.mymovies.adapters.ReviewAdapter;
+import com.example.mymovies.adapters.TrailerAdapter;
 import com.example.mymovies.data.FavoriteMovie;
 import com.example.mymovies.data.MainViewModel;
 import com.example.mymovies.data.Movie;
+import com.example.mymovies.data.Review;
+import com.example.mymovies.data.Trailer;
+import com.example.mymovies.utils.JSONUtils;
+import com.example.mymovies.utils.NetworkUtils;
 import com.squareup.picasso.Picasso;
+
+import org.json.JSONObject;
+
+import java.net.URI;
+import java.util.ArrayList;
 
 public class DetailActivity extends AppCompatActivity {
 
@@ -30,6 +45,11 @@ public class DetailActivity extends AppCompatActivity {
     private TextView textViewReleaseDate;
     private TextView textViewOverview;
 
+    private RecyclerView recyclerViewTrailers;
+    private RecyclerView recyclerViewReviews;
+    private ReviewAdapter reviewAdapter;
+    private TrailerAdapter trailerAdapter;
+
     private int id;
     private Movie movie;
     private MainViewModel viewModel;
@@ -38,7 +58,7 @@ public class DetailActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main_menu,menu);
+        inflater.inflate(R.menu.main_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -47,11 +67,11 @@ public class DetailActivity extends AppCompatActivity {
         int id = item.getItemId();
         switch (id) {
             case R.id.itemMenu:
-                Intent intent = new Intent(this,MainActivity.class);
+                Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
                 break;
             case R.id.itemFavourite:
-                Intent intentToFavourite = new Intent(this,FavouriteActivity.class);
+                Intent intentToFavourite = new Intent(this, FavouriteActivity.class);
                 startActivity(intentToFavourite);
                 break;
         }
@@ -71,7 +91,7 @@ public class DetailActivity extends AppCompatActivity {
         textViewOverview = findViewById(R.id.textViewOvervew);
         imageViewAddToFavourite = findViewById(R.id.imageViewAddToFavourite);
 
-        Intent intent = getIntent();
+        final Intent intent = getIntent();
         if (intent != null && intent.hasExtra("id")) {
             id = intent.getIntExtra("id", -1);
             movie = viewModel.getMovieById(id);
@@ -90,7 +110,31 @@ public class DetailActivity extends AppCompatActivity {
         } else {
             finish();
         }
-         setFavourite();
+        setFavourite();
+        recyclerViewTrailers = findViewById(R.id.recyclerViewTrailers);
+        recyclerViewReviews = findViewById(R.id.recyclerViewReviews);
+        reviewAdapter = new ReviewAdapter();
+        trailerAdapter = new TrailerAdapter();
+        //здесь кликаем и переходим по url
+        // на трейлер
+        trailerAdapter.setListener(new TrailerAdapter.OnTrailerClickListener() {
+            @Override
+            public void onClick(String url) {
+                Intent intentToTrailer = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                startActivity(intentToTrailer);
+            }
+        });
+
+        recyclerViewReviews.setLayoutManager(new LinearLayoutManager(this));
+        recyclerViewTrailers.setLayoutManager(new LinearLayoutManager(this));
+        recyclerViewReviews.setAdapter(reviewAdapter);
+        recyclerViewTrailers.setAdapter(trailerAdapter);
+        JSONObject jsonObjectTrailers = NetworkUtils.getJSONForVideos(movie.getId());
+        JSONObject jsonObjectReviews = NetworkUtils.getJSONForReviews(movie.getId());
+        ArrayList<Trailer> trailers = JSONUtils.getTrailersFromJSON(jsonObjectTrailers);
+        ArrayList<Review> reviews = JSONUtils.getReviewsFromJSON(jsonObjectReviews);
+        trailerAdapter.setTrailers(trailers);
+        reviewAdapter.setReviews(reviews);
     }
 
 
