@@ -1,10 +1,13 @@
-package com.example.mymovies;
+package com.example.mymovies.screens;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.loader.app.LoaderManager;
+import androidx.loader.content.Loader;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,6 +22,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.mymovies.R;
 import com.example.mymovies.adapters.MovieAdapter;
 import com.example.mymovies.data.MainViewModel;
 import com.example.mymovies.data.Movie;
@@ -27,17 +31,22 @@ import com.example.mymovies.utils.NetworkUtils;
 
 import org.json.JSONObject;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<JSONObject> {
 
     private Switch switchSort;
     private RecyclerView recyclerViewPosters;
     private MovieAdapter movieAdapter;
     private TextView textViewTopRated;
     private TextView getTextViewPopularity;
+
     private MainViewModel viewModel;
+
+    private static final int LOADER_ID = 133;
+    private LoaderManager loaderManager;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -55,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
                 break;
             case R.id.itemFavourite:
-                Intent intentToFavourite = new Intent(this,FavouriteActivity.class);
+                Intent intentToFavourite = new Intent(this, FavouriteActivity.class);
                 startActivity(intentToFavourite);
                 break;
         }
@@ -66,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        loaderManager = LoaderManager.getInstance(this);
         viewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication()).create(MainViewModel.class);
         recyclerViewPosters = findViewById(R.id.recyclerViewPosters);
         switchSort = findViewById(R.id.switchSort);
@@ -89,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onPosterClick(int position) {
                 Movie movie = movieAdapter.getMovies().get(position);
-                Intent intent = new Intent(MainActivity.this,DetailActivity.class);
+                Intent intent = new Intent(MainActivity.this, DetailActivity.class);
                 intent.putExtra("id", movie.getId());
                 startActivity(intent);
             }
@@ -134,13 +144,33 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void downloadData (int methodOfSort, int page) {
-        JSONObject jsonObject = NetworkUtils.getJSONFromNetwork(methodOfSort, 1);
-        ArrayList<Movie> movies = JSONUtils.getMoviesFromJson(jsonObject);
+        URL url = NetworkUtils.buildURL(methodOfSort,page);
+        Bundle bundle = new Bundle();
+        bundle.putString("url",url.toString());
+        loaderManager.restartLoader(LOADER_ID, bundle, this);
+    }
+
+    @NonNull
+    @Override
+    public Loader<JSONObject> onCreateLoader(int id, @Nullable Bundle args) {
+        NetworkUtils.JSONLoader jsonLoader = new NetworkUtils.JSONLoader(this, args);
+        return jsonLoader;
+    }
+
+    @Override
+    public void onLoadFinished(@NonNull Loader<JSONObject> loader, JSONObject data) {
+        ArrayList<Movie> movies = JSONUtils.getMoviesFromJson(data);
         if (!movies.isEmpty()) {
             viewModel.deleteAllMovies();
             for (Movie movie : movies) {
                 viewModel.insertMovie(movie);
             }
         }
+        loaderManager.destroyLoader(LOADER_ID);
+    }
+
+    @Override
+    public void onLoaderReset(@NonNull Loader<JSONObject> loader) {
+
     }
 }

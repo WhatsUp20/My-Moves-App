@@ -1,4 +1,4 @@
-package com.example.mymovies;
+package com.example.mymovies.screens;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,11 +14,11 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.mymovies.R;
 import com.example.mymovies.adapters.ReviewAdapter;
 import com.example.mymovies.adapters.TrailerAdapter;
 import com.example.mymovies.data.FavoriteMovie;
@@ -32,7 +32,6 @@ import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
 
-import java.net.URI;
 import java.util.ArrayList;
 
 public class DetailActivity extends AppCompatActivity {
