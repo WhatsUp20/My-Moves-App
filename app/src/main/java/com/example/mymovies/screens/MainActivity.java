@@ -22,6 +22,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 import com.example.mymovies.R;
 import com.example.mymovies.adapters.MovieAdapter;
 import com.example.mymovies.data.MainViewModel;

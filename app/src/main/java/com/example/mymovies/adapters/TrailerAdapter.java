@@ -3,6 +3,10 @@ package com.example.mymovies.adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+<<<<<<< HEAD
+=======
+import android.widget.ImageView;
+>>>>>>> 9f93e5a0e18f6b70e47347a275326df279c406f9
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;

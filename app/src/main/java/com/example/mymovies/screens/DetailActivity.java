@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mymovies.R;
+
 import com.example.mymovies.adapters.ReviewAdapter;
 import com.example.mymovies.adapters.TrailerAdapter;
 import com.example.mymovies.data.FavoriteMovie;
@@ -31,7 +32,6 @@ import com.example.mymovies.utils.NetworkUtils;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 
 public class DetailActivity extends AppCompatActivity {
