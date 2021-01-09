@@ -34,7 +34,7 @@ public class FavouriteActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main_menu,menu);
+        inflater.inflate(R.menu.main_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -47,7 +47,7 @@ public class FavouriteActivity extends AppCompatActivity {
                 startActivity(intent);
                 break;
             case R.id.itemFavourite:
-                Intent intentToFavourite = new Intent(this,FavouriteActivity.class);
+                Intent intentToFavourite = new Intent(this, FavouriteActivity.class);
                 startActivity(intentToFavourite);
                 break;
         }
@@ -59,7 +59,7 @@ public class FavouriteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favourite);
         recyclerViewFavouriteMovies = findViewById(R.id.recyclerViewFavouriteMovies);
-        recyclerViewFavouriteMovies.setLayoutManager(new GridLayoutManager(this,2));
+        recyclerViewFavouriteMovies.setLayoutManager(new GridLayoutManager(this, 2));
         viewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication()).create(MainViewModel.class);
         adapter = new MovieAdapter();
         recyclerViewFavouriteMovies.setAdapter(adapter);

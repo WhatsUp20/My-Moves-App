@@ -5,21 +5,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
+        style="@style/LabelStyle"
         android:id="@+id/textViewLabelTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:text="@string/text_view_label_title"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <View
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:layout_margin="4dp"
-        android:background="#000000"
-        app:layout_constraintTop_toBottomOf="@id/textViewLabelTitle"
+        style="@style/BorderStyle"
+        app:layout_constraintTop_toBottomOf="@id/textViewTitle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
 
@@ -34,27 +31,23 @@
         android:id="@+id/textViewTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:text="@string/text_view_title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/guidelineCenter"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@id/textViewLabelTitle" />
 
     <TextView
+        style="@style/LabelStyle"
         android:id="@+id/textViewLabelOriginalTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:text="@string/text_view_label_original_title"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewTitle" />
 
     <View
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:layout_margin="4dp"
-        android:background="#000000"
+        style="@style/BorderStyle"
         app:layout_constraintTop_toBottomOf="@id/textViewOriginalTitle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
@@ -70,35 +63,27 @@
         app:layout_constraintTop_toBottomOf="@+id/textViewTitle" />
 
     <View
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:layout_margin="4dp"
-        android:background="#000000"
+        style="@style/BorderStyle"
         app:layout_constraintTop_toBottomOf="@id/textViewLabelRating"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
 
 
     <TextView
+        style="@style/LabelStyle"
         android:id="@+id/textViewLabelRating"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:text="@string/text_view_label_rating"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewOriginalTitle" />
 
     <View
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:layout_margin="4dp"
-        android:background="#000000"
+        style="@style/BorderStyle"
         app:layout_constraintTop_toBottomOf="@id/textViewReleaseDate"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
-
-
 
     <TextView
         android:id="@+id/textViewRating"
@@ -110,26 +95,15 @@
         app:layout_constraintStart_toStartOf="@+id/guidelineCenter"
         app:layout_constraintTop_toBottomOf="@+id/textViewOriginalTitle" />
 
-
-
     <TextView
+        style="@style/LabelStyle"
         android:id="@+id/textViewLabelReleaseDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:text="@string/text_view_label_release_date"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewRating" />
-
-    <View
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:layout_margin="4dp"
-        android:background="#000000"
-        app:layout_constraintTop_toBottomOf="@id/textViewLabelDescription"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
 
     <TextView
         android:id="@+id/textViewReleaseDate"
@@ -142,11 +116,11 @@
         app:layout_constraintTop_toBottomOf="@+id/textViewRating" />
 
     <TextView
+        style="@style/LabelStyle"
         android:id="@+id/textViewLabelDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:text="@string/text_view_label_description"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewReleaseDate" />
@@ -155,11 +129,27 @@
         android:id="@+id/textViewOverview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_margin="8dp"
         android:text="@string/text_view_overview"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewLabelDescription" />
+
+    <View
+        style="@style/BorderStyle"
+        app:layout_constraintTop_toBottomOf="@id/textViewOverview"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <TextView
+        style="@style/LabelStyle"
+        android:id="@+id/textViewTrailers"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:text="@string/text_view_trailers"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewOverview"
+        />
 
 
     <androidx.recyclerview.widget.RecyclerView
@@ -169,7 +159,13 @@
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textViewOverview"/>
+        app:layout_constraintTop_toBottomOf="@id/textViewTrailers"/>
+
+    <View
+        style="@style/BorderStyle"
+        app:layout_constraintTop_toBottomOf="@id/recyclerViewTrailers"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewReviews"

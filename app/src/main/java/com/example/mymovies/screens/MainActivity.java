@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main_menu,menu);
+        inflater.inflate(R.menu.main_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         int id = item.getItemId();
         switch (id) {
             case R.id.itemMenu:
-                Intent intent = new Intent(this,MainActivity.class);
+                Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
                 break;
             case R.id.itemFavourite:
@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         int width = (int) (displayMetrics.widthPixels / displayMetrics.density);
-        return width / 185 > 2 ?  width / 185 : 2;
+        return width / 185 > 2 ? width / 185 : 2;
 
     }
 
@@ -132,7 +132,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             @Override
             public void onReachEnd() {
                 if (!isLoading) {
-                    downloadData(methodOfSort,page);
+                    downloadData(methodOfSort, page);
                 }
 
             }
@@ -148,33 +148,33 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         });
     }
 
-            public void onClickSetPopularity(View view) {
-                setMethodOfSort(false);
-                switchSort.setChecked(false);
-            }
-
-            public void onClockTopRated(View view) {
-                setMethodOfSort(true);
-                switchSort.setChecked(true);
-            }
-
-            private void setMethodOfSort(boolean isTopRated) {
-                if (!isTopRated) {
-                    textViewTopRated.setTextColor(getResources().getColor(R.color.white_color));
-                    getTextViewPopularity.setTextColor(getResources().getColor(R.color.colorAccent));
-                    methodOfSort = NetworkUtils.TOP_RATED;
-                } else {
-                    textViewTopRated.setTextColor(getResources().getColor(R.color.colorAccent));
-                    getTextViewPopularity.setTextColor(getResources().getColor(R.color.white_color));
-                    methodOfSort = NetworkUtils.POPULARITY;
-                }
-                downloadData(methodOfSort, page);
+    public void onClickSetPopularity(View view) {
+        setMethodOfSort(false);
+        switchSort.setChecked(false);
     }
 
-    private void downloadData (int methodOfSort, int page) {
-        URL url = NetworkUtils.buildURL(methodOfSort,page, lang);
+    public void onClockTopRated(View view) {
+        setMethodOfSort(true);
+        switchSort.setChecked(true);
+    }
+
+    private void setMethodOfSort(boolean isTopRated) {
+        if (!isTopRated) {
+            textViewTopRated.setTextColor(getResources().getColor(R.color.white_color));
+            getTextViewPopularity.setTextColor(getResources().getColor(R.color.colorAccent));
+            methodOfSort = NetworkUtils.TOP_RATED;
+        } else {
+            textViewTopRated.setTextColor(getResources().getColor(R.color.colorAccent));
+            getTextViewPopularity.setTextColor(getResources().getColor(R.color.white_color));
+            methodOfSort = NetworkUtils.POPULARITY;
+        }
+        downloadData(methodOfSort, page);
+    }
+
+    private void downloadData(int methodOfSort, int page) {
+        URL url = NetworkUtils.buildURL(methodOfSort, page, lang);
         Bundle bundle = new Bundle();
-        bundle.putString("url",url.toString());
+        bundle.putString("url", url.toString());
         loaderManager.restartLoader(LOADER_ID, bundle, this);
     }
 

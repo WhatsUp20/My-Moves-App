@@ -34,8 +34,8 @@
             app:srcCompat="@drawable/favourite_remove" />
 
         <include
-
             android:id="@+id/movieInfo"
+            layout="@layout/movie_info"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"

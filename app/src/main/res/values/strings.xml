@@ -18,4 +18,5 @@
     <string name="text_view_rating">TextView</string>
     <string name="text_view_release_date">TextView</string>
     <string name="text_view_overview">TextView</string>
+    <string name="text_view_trailers">Trailers:</string>
 </resources>

@@ -33,6 +33,7 @@ import com.example.mymovies.utils.NetworkUtils;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -135,15 +136,14 @@ public class DetailActivity extends AppCompatActivity {
         recyclerViewTrailers.setLayoutManager(new LinearLayoutManager(this));
         recyclerViewReviews.setAdapter(reviewAdapter);
         recyclerViewTrailers.setAdapter(trailerAdapter);
-        JSONObject jsonObjectTrailers = NetworkUtils.getJSONForVideos(movie.getId(),lang);
-        JSONObject jsonObjectReviews = NetworkUtils.getJSONForReviews(movie.getId(),lang);
+        JSONObject jsonObjectTrailers = NetworkUtils.getJSONForVideos(movie.getId(), lang);
+        JSONObject jsonObjectReviews = NetworkUtils.getJSONForReviews(movie.getId(), lang);
         ArrayList<Trailer> trailers = JSONUtils.getTrailersFromJSON(jsonObjectTrailers);
         ArrayList<Review> reviews = JSONUtils.getReviewsFromJSON(jsonObjectReviews);
         trailerAdapter.setTrailers(trailers);
         reviewAdapter.setReviews(reviews);
-        scrollViewInfo.smoothScrollTo(0,0);
+        scrollViewInfo.smoothScrollTo(0, 0);
     }
-
 
     //кнопка для добавления в избранное фильма или его удаления
     public void onClickChangeFavourite(View view) {
@@ -161,7 +161,7 @@ public class DetailActivity extends AppCompatActivity {
     //присвоения значений
     @SuppressLint("SetTextI18n")
     private void createMovieDetails(Movie movie) {
-        Picasso.get().load(movie.getBigPosterPath()).into(imageViewBigPoster);
+        Picasso.get().load(movie.getBigPosterPath()).placeholder(R.drawable.logo_movies_for_placeholder).into(imageViewBigPoster);
 
         textViewTitle.setText(movie.getTitle());
         textViewOriginalTitle.setText(movie.getOriginalTitle());
