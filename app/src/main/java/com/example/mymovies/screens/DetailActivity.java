@@ -15,6 +15,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +34,7 @@ import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class DetailActivity extends AppCompatActivity {
 
@@ -43,6 +45,7 @@ public class DetailActivity extends AppCompatActivity {
     private TextView textViewRating;
     private TextView textViewReleaseDate;
     private TextView textViewOverview;
+    private ScrollView scrollViewInfo;
 
     private RecyclerView recyclerViewTrailers;
     private RecyclerView recyclerViewReviews;
@@ -53,6 +56,8 @@ public class DetailActivity extends AppCompatActivity {
     private Movie movie;
     private MainViewModel viewModel;
     private FavoriteMovie favoriteMovie;
+
+    private static String lang;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -87,8 +92,10 @@ public class DetailActivity extends AppCompatActivity {
         textViewOriginalTitle = findViewById(R.id.textViewOriginalTitle);
         textViewRating = findViewById(R.id.textViewRating);
         textViewReleaseDate = findViewById(R.id.textViewReleaseDate);
-        textViewOverview = findViewById(R.id.textViewOvervew);
+        textViewOverview = findViewById(R.id.textViewOverview);
         imageViewAddToFavourite = findViewById(R.id.imageViewAddToFavourite);
+        scrollViewInfo = findViewById(R.id.scrollViewInfo);
+        lang = Locale.getDefault().getLanguage();
 
         final Intent intent = getIntent();
         if (intent != null && intent.hasExtra("id")) {
@@ -128,12 +135,13 @@ public class DetailActivity extends AppCompatActivity {
         recyclerViewTrailers.setLayoutManager(new LinearLayoutManager(this));
         recyclerViewReviews.setAdapter(reviewAdapter);
         recyclerViewTrailers.setAdapter(trailerAdapter);
-        JSONObject jsonObjectTrailers = NetworkUtils.getJSONForVideos(movie.getId());
-        JSONObject jsonObjectReviews = NetworkUtils.getJSONForReviews(movie.getId());
+        JSONObject jsonObjectTrailers = NetworkUtils.getJSONForVideos(movie.getId(),lang);
+        JSONObject jsonObjectReviews = NetworkUtils.getJSONForReviews(movie.getId(),lang);
         ArrayList<Trailer> trailers = JSONUtils.getTrailersFromJSON(jsonObjectTrailers);
         ArrayList<Review> reviews = JSONUtils.getReviewsFromJSON(jsonObjectReviews);
         trailerAdapter.setTrailers(trailers);
         reviewAdapter.setReviews(reviews);
+        scrollViewInfo.smoothScrollTo(0,0);
     }
 
 
