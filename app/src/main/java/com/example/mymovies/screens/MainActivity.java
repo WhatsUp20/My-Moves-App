@@ -82,11 +82,14 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         return super.onOptionsItemSelected(item);
     }
 
+
+    //метод рассчитывает число колонок в зависимости от ширины экрана
     private int getColumnCount() {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         int width = (int) (displayMetrics.widthPixels / displayMetrics.density);
         return width / 185 > 2 ?  width / 185 : 2;
+
     }
 
     @Override
